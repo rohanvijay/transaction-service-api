@@ -8,21 +8,21 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
 
+
 public class Transaction {
 
 	@NotNull
-	@Pattern(regexp = "[\\d{9}]")
+	@Pattern(regexp = "\\d{8}")
 	private String transactionDate;
 	
 	@NotNull
-	@Pattern(regexp = "[\\d{9}]")
+	@Pattern(regexp = "\\d{8}")
 	private String postedDate;
 	
 	@NotNull
 	@DecimalMin(value = "0.0")
 	private BigDecimal transactionAmount;
 	
-	@NotNull
 	private String transactionReferenceId;
 	
 	@NotNull
@@ -38,19 +38,19 @@ public class Transaction {
 	
 //	private String transactionAccountdNumber;
 	@NotNull
-	@Pattern(regexp = "[\\d{4}]")
+	@Pattern(regexp = "\\d{4}")
 	private String cardExpirationDate;
 	
 	@NotNull
-	@Pattern(regexp = "[\\d{9}]")
+	@Pattern(regexp = "\\d{9}")
 	private String storeId;
 	
 	@NotNull
-	@Pattern(regexp = "[\\d{3}]")
+	@Pattern(regexp = "\\d{3}")
 	private String currencyCode;
 	
 	@NotNull
-	@Pattern(regexp = "[\\d{2}]")
+	@Pattern(regexp = "\\d{2}")
 	private String pointOfSalePresenceCode;
 	
 	@NotNull

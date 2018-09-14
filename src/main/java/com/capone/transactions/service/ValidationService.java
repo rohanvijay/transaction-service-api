@@ -48,9 +48,7 @@ public class ValidationService {
 	}
 
 	public void validatePostedTransaction(Transaction transaction) {
-		
-		validateTransactionId(transaction.getTransactionReferenceId());
-		
+				
 		validateAccountNumber(transaction.getCardReferenceId());
 		
 	}

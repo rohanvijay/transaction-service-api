@@ -16,11 +16,11 @@ public class MerchantDetails {
 	private String category;
 	
 	@NotNull
-	@Pattern(regexp = "[\\d{2}]")
+	@Pattern(regexp = "\\d{2}")
 	private String categoryCode;
 	
 	@NotNull
-	@Pattern(regexp = "[\\d{6}]")
+	@Pattern(regexp = "\\d{6}")
 	private String storeNumber;
 	
 	@NotNull
