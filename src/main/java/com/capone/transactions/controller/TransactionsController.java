@@ -2,6 +2,8 @@ package com.capone.transactions.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capone.transactions.exceptions.BadRequestException;
-import com.capone.transactions.model.MerchantAddress;
-import com.capone.transactions.model.MerchantDetails;
 import com.capone.transactions.model.Transaction;
 import com.capone.transactions.model.TransactionSearchRequest;
 import com.capone.transactions.service.TransactionsService;
@@ -33,17 +33,12 @@ public class TransactionsController {
 	@RequestMapping("/accounts/{accountReferenceId}/transactions")
 	public List<Transaction> getTransactions(@PathVariable("accountReferenceId") String accountReferenceId, @RequestParam(value = "amount", required=false) String amount){
 		
-		boolean isValidAccountNumber = validationService.validateAccountNumber(accountReferenceId);
-		boolean isValidAmount = validationService.valiateAmount(amount);
-		
-		if(isValidAccountNumber && isValidAmount){
+			validationService.validateAccountNumber(accountReferenceId);
 			TransactionSearchRequest transactionRequest = new TransactionSearchRequest();
 			transactionRequest.setAccountReferenceId(accountReferenceId);
 			
 			return transactionService.getTransactionBySearchCriteria(transactionRequest);
-		}else{
-			throw new BadRequestException();
-		}
+		
 	}
 	
 	@RequestMapping("/accounts/{accountReferenceId}/transactions/{transactionReferenceId}")
@@ -63,9 +58,9 @@ public class TransactionsController {
 	}
 	
 	@RequestMapping("/postTransaction")
-	public void postTransaction(@RequestBody Transaction transaction){
+	public void postTransaction(@Valid @RequestBody Transaction transaction){
 		
-		//add validation
+		validationService.validatePostedTransaction(transaction);
 		
 		transactionService.addTransaction(transaction.getCardReferenceId(),transaction);
 		

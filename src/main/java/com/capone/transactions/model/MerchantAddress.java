@@ -1,19 +1,36 @@
 package com.capone.transactions.model;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+
 public class MerchantAddress {
 
+	@NotNull
+	@Length(max = 50, min = 1, message = "The message description should be within 1 to 50 characters")
 	private String addressLine1;
 	
+	@NotNull
+	@Length(max = 50, min = 1, message = "The message description should be within 1 to 50 characters")
 	private String addressLine2;
 	
+	@NotNull
+	@Length(max = 50, min = 1, message = "The message description should be within 1 to 50 characters")
 	private String addressLine3;
 	
+	@NotNull
+	@Length(max = 50, min = 1, message = "The message description should be within 1 to 50 characters")
 	private String city;
 	
+	@NotNull
+	@Length(max = 50, min = 1, message = "The message description should be within 1 to 50 characters")
 	private String state;
 	
+	@NotNull
 	private String postalCode;
 	
+	@NotNull
+	@Length(max = 50, min = 1, message = "The message description should be within 1 to 50 characters")
 	private String country;
 
 	public String getAddressLine1() {

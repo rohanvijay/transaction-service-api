@@ -2,40 +2,68 @@ package com.capone.transactions.model;
 
 import java.math.BigDecimal;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Length;
 
 public class Transaction {
 
+	@NotNull
+	@Pattern(regexp = "[\\d{9}]")
 	private String transactionDate;
 	
+	@NotNull
+	@Pattern(regexp = "[\\d{9}]")
 	private String postedDate;
 	
+	@NotNull
+	@DecimalMin(value = "0.0")
 	private BigDecimal transactionAmount;
 	
+	@NotNull
 	private String transactionReferenceId;
 	
+	@NotNull
+	@Length(max = 50, min = 1, message = "The message description should be within 1 to 50 characters")
 	private String transactionDescription;
 	
+	@NotNull
 	private String balanceSegmentCode;
 	
+	@NotNull
+	@Length(max = 2, min = 2)
 	private String debitCreditCode;
 	
 //	private String transactionAccountdNumber;
-	
+	@NotNull
+	@Pattern(regexp = "[\\d{4}]")
 	private String cardExpirationDate;
 	
+	@NotNull
+	@Pattern(regexp = "[\\d{9}]")
 	private String storeId;
 	
+	@NotNull
+	@Pattern(regexp = "[\\d{3}]")
 	private String currencyCode;
 	
+	@NotNull
+	@Pattern(regexp = "[\\d{2}]")
 	private String pointOfSalePresenceCode;
 	
+	@NotNull
+	@Length(max = 50, min = 1, message = "The message description should be within 1 to 50 characters")
 	private String pointOfSalePresenceDescription;
 	
+	@NotNull
 	private String pointOfSaleCardUsageCode;
 	
+	@NotNull
 	private String cardReferenceId;
 	
+	@NotNull
 	private MerchantDetails merchantDetails;
 
 	public String getTransactionDate() {

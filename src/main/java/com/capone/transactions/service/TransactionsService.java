@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.capone.transactions.dao.TransactionDAO;
+import com.capone.transactions.exceptions.BadRequestException;
 import com.capone.transactions.model.Transaction;
 import com.capone.transactions.model.TransactionSearchRequest;
 import com.capone.transactions.utils.EncryptionDecryptionUtility;
@@ -47,7 +48,7 @@ public class TransactionsService {
 			System.out.println("See here TID: "+transactionId);
 		}
 		catch(Exception ex){
-				
+			throw new BadRequestException();
 		}
 		
 		return transactionDAO.getTransaction(transactionId);

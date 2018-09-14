@@ -1,15 +1,29 @@
 package com.capone.transactions.model;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Length;
+
 public class MerchantDetails {
 	
+	@NotNull
+	@Length(max = 50, min = 1, message = "The message description should be within 1 to 50 characters")
 	private String merchantName;
 	
+	@NotNull
+	@Length(max = 50, min = 1, message = "The message description should be within 1 to 50 characters")
 	private String category;
 	
+	@NotNull
+	@Pattern(regexp = "[\\d{2}]")
 	private String categoryCode;
 	
+	@NotNull
+	@Pattern(regexp = "[\\d{6}]")
 	private String storeNumber;
 	
+	@NotNull
 	private MerchantAddress merchantAddress;
 
 	public String getMerchantName() {
