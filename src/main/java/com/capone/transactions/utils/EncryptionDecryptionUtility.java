@@ -1,12 +1,12 @@
 package com.capone.transactions.utils;
 
-import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,10 @@ public class EncryptionDecryptionUtility {
 		} catch (NoSuchAlgorithmException e) {
 			
 		}
-		 secretKey = keyGenerator.generateKey();
+		 
+		 byte[] key = {-66, -59, -2, 94, -77, 72, -115, 51, 36, -83, -15, -34, 68, -116, 105, -124};
+		 
+		 secretKey = new SecretKeySpec(key, "AES");
 	}
 	public String encrypt(String plainText)
 			throws Exception {

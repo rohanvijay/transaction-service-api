@@ -12,15 +12,15 @@ import org.hibernate.validator.constraints.Length;
 public class Transaction {
 
 	@NotNull
-	@Pattern(regexp = "\\d{8}")
+	@Pattern(regexp = "\\d{8}", message = "Invalid Transaction Date")
 	private String transactionDate;
 	
 	@NotNull
-	@Pattern(regexp = "\\d{8}")
+	@Pattern(regexp = "\\d{8}",  message = "Invalid Posted Date")
 	private String postedDate;
 	
 	@NotNull
-	@DecimalMin(value = "0.0")
+	@DecimalMin(value = "0.0",  message = "Invalid Transaction Amount")
 	private BigDecimal transactionAmount;
 	
 	private String transactionReferenceId;
@@ -33,20 +33,20 @@ public class Transaction {
 	private String balanceSegmentCode;
 	
 	@NotNull
-	@Length(max = 2, min = 2)
+	@Length(max = 2, min = 2,  message = "Invalid Debit/Credit Code")
 	private String debitCreditCode;
 	
 //	private String transactionAccountdNumber;
 	@NotNull
-	@Pattern(regexp = "\\d{4}")
+	@Pattern(regexp = "\\d{4}",  message = "Invalid Card Expiration Date")
 	private String cardExpirationDate;
 	
 	@NotNull
-	@Pattern(regexp = "\\d{9}")
+	@Pattern(regexp = "\\d{9}",  message = "Invalid Store Id")
 	private String storeId;
 	
 	@NotNull
-	@Pattern(regexp = "\\d{3}")
+	@Pattern(regexp = "\\d{3}",  message = "Invalid Currency Code")
 	private String currencyCode;
 	
 	@NotNull
