@@ -3,6 +3,7 @@ package com.capone.transactions.service;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,6 +51,25 @@ public class ValidationService {
 	public void validatePostedTransaction(Transaction transaction) {
 				
 		validateAccountNumber(transaction.getCardReferenceId());
+		boolean validPostalCode = false;
+		
+		if(transaction.getDebitCreditCode().equalsIgnoreCase("CR")){
+			if(transaction.getPointOfSalePresenceCode() == null || transaction.getPointOfSalePresenceDescription() == null){
+				throw new BadRequestException();
+			}
+		}
+		
+		if(transaction.getMerchantDetails().getMerchantAddress().getCountry().equalsIgnoreCase("US")){
+			validPostalCode = Pattern.matches("^\\d{5}(?:[-\\s]\\d{4})?$", transaction.getMerchantDetails().getMerchantAddress().getPostalCode());
+		}
+		
+		if(transaction.getMerchantDetails().getMerchantAddress().getCountry().equalsIgnoreCase("CA")){
+			validPostalCode = Pattern.matches("/^[A-Za-z]\\d[A-Za-z][ -]?\\d[A-Za-z]\\d$/", transaction.getMerchantDetails().getMerchantAddress().getPostalCode());
+		}
+		
+		if(!validPostalCode){
+			throw new BadRequestException();
+		}
 		
 	}
 	
