@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.capone.transactions.exceptions.BadRequestException;
 import com.capone.transactions.model.Transaction;
 import com.capone.transactions.model.TransactionSearchRequest;
-import com.capone.transactions.service.TransactionsService;
+import com.capone.transactions.service.TransactionService;
 import com.capone.transactions.service.ValidationService;
 import com.capone.transactions.utils.EncryptionDecryptionUtility;
 
@@ -22,7 +22,7 @@ import com.capone.transactions.utils.EncryptionDecryptionUtility;
 public class TransactionsController {
 	
 	@Autowired
-	TransactionsService transactionService;
+	TransactionService transactionService;
 	
 	@Autowired
 	ValidationService validationService;

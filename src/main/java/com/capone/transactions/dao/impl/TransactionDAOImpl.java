@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.capone.transactions.config.AccountTransactionsMapping;
 import com.capone.transactions.config.TransactionsStore;
@@ -12,6 +13,7 @@ import com.capone.transactions.dao.TransactionDAO;
 import com.capone.transactions.model.Transaction;
 import com.capone.transactions.model.TransactionSearchRequest;
 
+@Component
 public class TransactionDAOImpl implements TransactionDAO {
 
 	@Autowired
@@ -19,38 +21,6 @@ public class TransactionDAOImpl implements TransactionDAO {
 
 	@Autowired
 	AccountTransactionsMapping accountTransactionsMapping;
-
-	@Override
-	public List<Transaction> getTransactionsList(String accountNumber) {
-		List<Transaction> transactionList = new ArrayList<Transaction>();
-
-		Map<String, List<String>> accountTransactions = accountTransactionsMapping
-				.getTransactionsMap();
-
-		List<String> listOfTransactionsOnAccount = accountTransactions
-				.get(accountNumber);
-
-		Map<String, Transaction> transactionsMap = transactionsStore
-				.getTransactions();
-
-		if (!listOfTransactionsOnAccount.isEmpty()) {
-			for (Map.Entry<String, Transaction> entry : transactionsMap
-					.entrySet()) {
-
-				for (int i = 0; i < listOfTransactionsOnAccount.size()
-						|| i > 24; i++) {
-
-					if (listOfTransactionsOnAccount.get(i) == entry.getKey()) {
-						transactionList.add(entry.getValue());
-					}
-				}
-			}
-		}
-
-		// insert sorting logic
-
-		return transactionList;
-	}
 
 	@Override
 	public Transaction getTransaction(String transactionId) {
@@ -81,12 +51,19 @@ public class TransactionDAOImpl implements TransactionDAO {
 		Map<String, Transaction> transactionsMap = transactionsStore
 				.getTransactions();
 
-		for (int i = 0; i < listOfTransactionsOnAccount.size(); i++) {
-			transactionList.add(transactionsMap.get(listOfTransactionsOnAccount
-					.get(i)));
+		//Iterating from the last to get the latest transactions first.
+		
+		for (int i = listOfTransactionsOnAccount.size()-1; i >= 0; i--) {
+			
+			Transaction transaction = transactionsMap.get(listOfTransactionsOnAccount
+					.get(i));
+			
+			if(transactionRequest.getAmount() != null &&
+					transactionRequest.getAmount()==transaction.getTransactionAmount()){
+				
+							transactionList.add(transaction);
+			}
 		}
-
-		// insert sorting logic
 
 		return transactionList;
 	}
