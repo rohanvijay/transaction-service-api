@@ -22,7 +22,6 @@ public class EncryptionDecryptionUtility {
 		} catch (NoSuchAlgorithmException e) {
 			
 		}
-		 
 		 byte[] key = {-66, -59, -2, 94, -77, 72, -115, 51, 36, -83, -15, -34, 68, -116, 105, -124};
 		 
 		 secretKey = new SecretKeySpec(key, "AES");
@@ -30,11 +29,8 @@ public class EncryptionDecryptionUtility {
 	public String encrypt(String plainText)
 			throws Exception {
 		
-		
 		keyGenerator.init(128);
-		
 		cipher = Cipher.getInstance("AES");
-		
 		byte[] plainTextByte = plainText.getBytes();
 		cipher.init(Cipher.ENCRYPT_MODE, secretKey);
 		byte[] encryptedByte = cipher.doFinal(plainTextByte);
@@ -47,7 +43,6 @@ public class EncryptionDecryptionUtility {
 			throws Exception {
 		
 		cipher = Cipher.getInstance("AES");
-		
 		Base64.Decoder decoder = Base64.getDecoder();
 		byte[] encryptedTextByte = decoder.decode(encryptedText);
 		cipher.init(Cipher.DECRYPT_MODE, secretKey);
