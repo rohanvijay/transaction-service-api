@@ -59,7 +59,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 					.get(i));
 			
 			if(transactionRequest.getAmount() != null &&
-					transactionRequest.getAmount()==transaction.getTransactionAmount()){
+					Double.parseDouble(transaction.getTransactionAmount())>=Double.parseDouble(transactionRequest.getAmount())){
 				
 							transactionList.add(transaction);
 			}

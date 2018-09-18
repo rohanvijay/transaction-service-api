@@ -14,48 +14,48 @@ public class Transaction {
 	@NotNull
 	@Pattern(regexp = "\\d{8}", message = "Invalid Transaction Date")
 	private String transactionDate;
-	
+
 	@NotNull
-	@Pattern(regexp = "\\d{8}",  message = "Invalid Posted Date")
+	@Pattern(regexp = "\\d{8}", message = "Invalid Posted Date")
 	private String postedDate;
-	
+
 	@NotNull
-	@DecimalMin(value = "0.0",  message = "Invalid Transaction Amount")
-	private Double transactionAmount;
-	
+	@DecimalMin(value = "0.0", message = "Invalid Transaction Amount")
+	private String transactionAmount;
+
 	private String transactionReferenceId;
-	
+
 	@NotNull
 	@Length(max = 50, min = 1, message = "The message description should be within 1 to 50 characters")
 	private String transactionDescription;
-	
+
 	@NotNull
-	@Length(max = 2, min = 2,  message = "Invalid Debit/Credit Code")
+	@Length(max = 2, min = 2, message = "Invalid Debit/Credit Code")
 	private String debitCreditCode;
-	
-//	private String transactionAccountdNumber;
+
+	// private String transactionAccountdNumber;
 	@NotNull
-	@Pattern(regexp = "\\d{4}",  message = "Invalid Card Expiration Date")
+	@Pattern(regexp = "\\d{4}", message = "Invalid Card Expiration Date")
 	private String cardExpirationDate;
-	
+
 	@NotNull
-	@Pattern(regexp = "\\d{3}",  message = "Invalid Currency Code")
+	@Pattern(regexp = "\\d{3}", message = "Invalid Currency Code")
 	private String currencyCode;
-	
+
 	@NotNull
 	@Pattern(regexp = "\\d{2}")
 	private String pointOfSalePresenceCode;
-	
+
 	@NotNull
 	@Length(max = 50, min = 1, message = "The message description should be within 1 to 50 characters")
 	private String pointOfSalePresenceDescription;
-	
+
 	@NotNull
 	private String pointOfSaleCardUsageCode;
-	
+
 	@NotNull
 	private String cardReferenceId;
-	
+
 	@NotNull
 	private MerchantDetails merchantDetails;
 
@@ -75,11 +75,11 @@ public class Transaction {
 		this.postedDate = postedDate;
 	}
 
-	public Double getTransactionAmount() {
+	public String getTransactionAmount() {
 		return transactionAmount;
 	}
 
-	public void setTransactionAmount(Double transactionAmount) {
+	public void setTransactionAmount(String transactionAmount) {
 		this.transactionAmount = transactionAmount;
 	}
 
@@ -99,14 +99,6 @@ public class Transaction {
 		this.transactionDescription = transactionDescription;
 	}
 
-	public String getBalanceSegmentCode() {
-		return balanceSegmentCode;
-	}
-
-	public void setBalanceSegmentCode(String balanceSegmentCode) {
-		this.balanceSegmentCode = balanceSegmentCode;
-	}
-
 	public String getDebitCreditCode() {
 		return debitCreditCode;
 	}
@@ -121,14 +113,6 @@ public class Transaction {
 
 	public void setCardExpirationDate(String cardExpirationDate) {
 		this.cardExpirationDate = cardExpirationDate;
-	}
-
-	public String getStoreId() {
-		return storeId;
-	}
-
-	public void setStoreId(String storeId) {
-		this.storeId = storeId;
 	}
 
 	public String getCurrencyCode() {

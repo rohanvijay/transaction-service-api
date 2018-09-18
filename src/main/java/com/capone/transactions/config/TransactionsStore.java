@@ -24,7 +24,7 @@ public class TransactionsStore {
 			e.printStackTrace();
 		}
 
-		  System.out.println("Prepolulated data: "+transation.getBalanceSegmentCode());
+		  System.out.println("Prepolulated data: "+ transation.getCardExpirationDate());
 		  
 	}
 	//Map that will store plain text TrasactionId as key and corresponding Transaction as value.
