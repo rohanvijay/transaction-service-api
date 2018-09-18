@@ -12,6 +12,7 @@ import com.capone.transactions.config.TransactionsStore;
 import com.capone.transactions.dao.TransactionDAO;
 import com.capone.transactions.model.Transaction;
 import com.capone.transactions.model.TransactionSearchRequest;
+import com.capone.transactions.utils.TransactionsUtility;
 
 @Component("transactionDAO")
 public class TransactionDAOImpl implements TransactionDAO {
@@ -21,6 +22,9 @@ public class TransactionDAOImpl implements TransactionDAO {
 
 	@Autowired
 	AccountTransactionsMapping accountTransactionsMapping;
+	
+	@Autowired
+	TransactionsUtility transactionsUtility;
 
 	@Override
 	public Transaction getTransaction(String transactionId) {
@@ -34,7 +38,8 @@ public class TransactionDAOImpl implements TransactionDAO {
 				transaction = entry.getValue();
 			}
 		}
-		return transaction;
+		
+		return transactionsUtility.encryptPCIData(transaction);
 	}
 
 	@Override
@@ -60,8 +65,8 @@ public class TransactionDAOImpl implements TransactionDAO {
 			
 			if(transactionRequest.getAmount() != null &&
 					Double.parseDouble(transaction.getTransactionAmount())>=Double.parseDouble(transactionRequest.getAmount())){
-				
-							transactionList.add(transaction);
+							
+							transactionList.add(transactionsUtility.encryptPCIData(transaction));
 			}
 		}
 

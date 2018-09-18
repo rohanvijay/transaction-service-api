@@ -3,7 +3,6 @@ package com.capone.transactions.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.capone.transactions.dao.impl.TransactionDAOImpl;
@@ -17,16 +16,7 @@ import com.capone.transactions.utils.TransactionsUtility;
 public class TransactionService {
 
 	@Autowired
-	@Qualifier("transactionDAO")
 	TransactionDAOImpl transactionDAO;
-
-	public TransactionDAOImpl getTransactionDAO() {
-		return transactionDAO;
-	}
-
-	public void setTransactionDAO(TransactionDAOImpl transactionDAO) {
-		this.transactionDAO = transactionDAO;
-	}
 
 	@Autowired
 	EncryptionDecryptionUtility encryptionDecryptionUtility;
