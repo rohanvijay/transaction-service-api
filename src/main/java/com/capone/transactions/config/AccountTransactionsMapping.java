@@ -7,6 +7,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+//This class will map Account Numbers to all the Transactions IDs on that account
+
 @Component
 public class AccountTransactionsMapping {
 

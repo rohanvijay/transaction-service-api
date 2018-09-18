@@ -13,7 +13,7 @@ import com.capone.transactions.dao.TransactionDAO;
 import com.capone.transactions.model.Transaction;
 import com.capone.transactions.model.TransactionSearchRequest;
 
-@Component
+@Component("transactionDAO")
 public class TransactionDAOImpl implements TransactionDAO {
 
 	@Autowired

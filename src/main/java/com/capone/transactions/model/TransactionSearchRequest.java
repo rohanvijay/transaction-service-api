@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public class TransactionSearchRequest {
 
 	String accountReferenceId;
-	BigDecimal amount;
+	Double amount;
 	String accountNumber;
 	
 	public String getAccountReferenceId() {
@@ -14,10 +14,10 @@ public class TransactionSearchRequest {
 	public void setAccountReferenceId(String accountReferenceId) {
 		this.accountReferenceId = accountReferenceId;
 	}
-	public BigDecimal getAmount() {
+	public Double getAmount() {
 		return amount;
 	}
-	public void setAmount(BigDecimal amount) {
+	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
 	public String getAccountNumber() {

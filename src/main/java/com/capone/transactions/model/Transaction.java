@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
-
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 public class Transaction {
 
@@ -21,16 +21,13 @@ public class Transaction {
 	
 	@NotNull
 	@DecimalMin(value = "0.0",  message = "Invalid Transaction Amount")
-	private BigDecimal transactionAmount;
+	private Double transactionAmount;
 	
 	private String transactionReferenceId;
 	
 	@NotNull
 	@Length(max = 50, min = 1, message = "The message description should be within 1 to 50 characters")
 	private String transactionDescription;
-	
-	@NotNull
-	private String balanceSegmentCode;
 	
 	@NotNull
 	@Length(max = 2, min = 2,  message = "Invalid Debit/Credit Code")
@@ -40,10 +37,6 @@ public class Transaction {
 	@NotNull
 	@Pattern(regexp = "\\d{4}",  message = "Invalid Card Expiration Date")
 	private String cardExpirationDate;
-	
-	@NotNull
-	@Pattern(regexp = "\\d{9}",  message = "Invalid Store Id")
-	private String storeId;
 	
 	@NotNull
 	@Pattern(regexp = "\\d{3}",  message = "Invalid Currency Code")
@@ -82,11 +75,11 @@ public class Transaction {
 		this.postedDate = postedDate;
 	}
 
-	public BigDecimal getTransactionAmount() {
+	public Double getTransactionAmount() {
 		return transactionAmount;
 	}
 
-	public void setTransactionAmount(BigDecimal transactionAmount) {
+	public void setTransactionAmount(Double transactionAmount) {
 		this.transactionAmount = transactionAmount;
 	}
 
