@@ -3,9 +3,10 @@ package com.capone.transactions.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.capone.transactions.dao.TransactionDAO;
+import com.capone.transactions.dao.impl.TransactionDAOImpl;
 import com.capone.transactions.exceptions.BadRequestException;
 import com.capone.transactions.model.Transaction;
 import com.capone.transactions.model.TransactionSearchRequest;
@@ -16,7 +17,16 @@ import com.capone.transactions.utils.TransactionsUtility;
 public class TransactionService {
 
 	@Autowired
-	TransactionDAO transactionDAO;
+	@Qualifier("transactionDAO")
+	TransactionDAOImpl transactionDAO;
+
+	public TransactionDAOImpl getTransactionDAO() {
+		return transactionDAO;
+	}
+
+	public void setTransactionDAO(TransactionDAOImpl transactionDAO) {
+		this.transactionDAO = transactionDAO;
+	}
 
 	@Autowired
 	EncryptionDecryptionUtility encryptionDecryptionUtility;
@@ -68,12 +78,7 @@ public class TransactionService {
 
 		String transactionId = transactionsUtility.generateKey();
 
-		try {
-			transaction.setTransactionReferenceId(encryptionDecryptionUtility
-					.encrypt(transactionId));
-		} catch (Exception e) {
-
-		}
+		transaction.setTransactionReferenceId(transactionId);
 
 		transactionDAO.addToTransactionsList(accountNumber, transaction,
 				transactionId);
