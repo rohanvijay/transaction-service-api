@@ -16,6 +16,7 @@ import com.capone.transactions.config.TransactionsStore;
 import com.capone.transactions.model.MerchantAddress;
 import com.capone.transactions.model.MerchantDetails;
 import com.capone.transactions.model.Transaction;
+import com.capone.transactions.model.TransactionSearchRequest;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TransactionDAOImplTest {
@@ -44,7 +45,7 @@ public class TransactionDAOImplTest {
 		transaction1.setPointOfSalePresenceDescription("Card holder present at time of transaction");
 		transaction1.setPointOfSalePresenceCode("12");
 		transaction1.setPostedDate("20180210");
-		transaction1.setTransactionAmount(34.12);
+		transaction1.setTransactionAmount("34.12");
 		transaction1.setTransactionDate("20180206");
 		transaction1.setTransactionDescription("Purchase");
 		transaction1.setTransactionReferenceId("123");
@@ -68,14 +69,17 @@ public class TransactionDAOImplTest {
 		transactionsStore.getTransactions().put("123", transaction1);
 		
 		Transaction transaction2 = new Transaction();
-		transaction2.setDebitCreditCode("CR");
-		transaction1.setTransactionReferenceId("234");
-		MerchantDetails merchant2 = new MerchantDetails();
-		merchant.setCategory("02");
-		MerchantAddress address2 = new MerchantAddress();
-		address.setCity("Mumbai");
-		merchant.setMerchantAddress(address2);
-		transaction2.setMerchantDetails(merchant2);
+		
+		transaction2.setCardExpirationDate("0415");
+		transaction2.setCardReferenceId("12345678954321");
+		transaction2.setCurrencyCode("124");
+		transaction2.setDebitCreditCode("DB");
+		transaction2.setPostedDate("20180312");
+		transaction2.setTransactionAmount("12.09");
+		transaction2.setTransactionDate("20180308");
+		transaction2.setTransactionDescription("Refund");
+		transaction2.setTransactionReferenceId("234");
+		
 		transactionsStore.getTransactions().put("234", transaction2);
 		
 		List<String> transactionsList = new ArrayList();
@@ -91,12 +95,17 @@ public class TransactionDAOImplTest {
 	public void test() {
 		Transaction transaction = transactionDAO.getTransaction("123");
 		Assert.assertTrue("Transaction is null",transaction!=null);
+		Assert.assertTrue("Incorrect Transaction retrieved", transaction.getTransactionReferenceId().equals("123"));
 	}
 	
 	@Test
 	public void test2() {
-		Transaction transaction = transactionDAO.getTransaction("1234");
-		Assert.assertTrue("Transaction should be null",transaction==null);
+		TransactionSearchRequest transactionSearchRequest = new TransactionSearchRequest();
+		transactionSearchRequest.setAmount("34.11");
+		transactionSearchRequest.setAccountNumber("12345678912345");
+		
+		List<Transaction> transactions = transactionDAO.getTransactionsList(transactionSearchRequest);
+		Assert.assertTrue("Only One Transaction Exists",transactions.size()==1);
 	}
 
 }
