@@ -63,11 +63,13 @@ public class TransactionDAOImpl implements TransactionDAO {
 				DetailedTransaction detailedTransaction = transactionsMap
 						.get(listOfTransactionsOnAccount.get(i));
 
-				if (transactionRequest.getAmount() != null
-						&& Double.parseDouble(detailedTransaction.getTransactionAmount()) >= 
-						Double.parseDouble(transactionRequest.getAmount())) {
+				if (transactionRequest.getAmount() != null){
+					if(Double.parseDouble(detailedTransaction.getTransactionAmount()) >= 
+							Double.parseDouble(transactionRequest.getAmount())) {
 
-					transactionList.add(detailedTransaction);
+						transactionList.add(detailedTransaction);
+					}
+				
 				} else {
 					transactionList.add(detailedTransaction);
 				}
