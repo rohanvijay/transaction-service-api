@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.capone.transactions.exceptions.BadRequestException;
+import com.capone.transactions.exceptions.NoContentException;
+import com.capone.transactions.model.DetailedTransaction;
 import com.capone.transactions.model.Transaction;
 import com.capone.transactions.model.TransactionSearchRequest;
 import com.capone.transactions.service.TransactionService;
@@ -37,28 +38,29 @@ public class TransactionsController {
 			TransactionSearchRequest transactionRequest = new TransactionSearchRequest();
 			transactionRequest.setAccountReferenceId(accountReferenceId);
 			
+			
 			return transactionService.getTransactionBySearchCriteria(transactionRequest);
 		
 	}
 	
 	@RequestMapping("/accounts/{accountReferenceId}/transactions/{transactionReferenceId}")
-	public Transaction getTransactionById(@PathVariable("accountReferenceId") String accountReferenceId, @PathVariable("transactionReferenceId") String transactionReferenceId){
+	public DetailedTransaction getTransactionById(@PathVariable("accountReferenceId") String accountReferenceId, @PathVariable("transactionReferenceId") String transactionReferenceId){
 		
-	//	boolean isValidAccountNumber = validationService.validateAccountNumber(accountReferenceId);
-	//	boolean isValidTransactionId = validationService.validateTransactionId(transactionReferenceId);
-		
-		boolean isValidAccountNumber = true;
-		boolean isValidTransactionId = true;
-		
-		if(isValidAccountNumber && isValidTransactionId){
-			return transactionService.getTransactionById(transactionReferenceId);
-		}else{
-			throw new BadRequestException();
+		validationService.validateAccountNumber(accountReferenceId);
+		validationService.validateTransactionId(transactionReferenceId);
+	
+		DetailedTransaction transaction=  transactionService.getTransactionById(transactionReferenceId);
+	
+		if(transaction!=null){
+			return transaction;
+		}
+		else{
+			throw new NoContentException();
 		}
 	}
 	
 	@RequestMapping("/postTransaction")
-	public void postTransaction(@Valid @RequestBody Transaction transaction){
+	public void postTransaction(@Valid @RequestBody DetailedTransaction transaction){
 		
 		validationService.validatePostedTransaction(transaction);
 		

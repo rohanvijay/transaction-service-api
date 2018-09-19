@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.capone.transactions.exceptions.BadRequestException;
-import com.capone.transactions.model.Transaction;
+import com.capone.transactions.model.DetailedTransaction;
 import com.capone.transactions.utils.EncryptionDecryptionUtility;
 
 @Service
@@ -28,7 +28,7 @@ public class ValidationService {
 		catch(Exception ex){
 			throw new BadRequestException();
 		}
-		if (transactionId == null || !(transactionId.matches("\\d{9}"))){
+		if (transactionId == null || !(transactionId.matches("\\d{18}"))){
 			throw new BadRequestException();
 		}
 	}
@@ -48,7 +48,7 @@ public class ValidationService {
 		}
 	}
 
-	public void validatePostedTransaction(Transaction transaction) {
+	public void validatePostedTransaction(DetailedTransaction transaction) {
 				
 		validateAccountNumber(transaction.getCardReferenceId());
 		boolean validPostalCode = false;

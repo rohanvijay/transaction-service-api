@@ -7,8 +7,6 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.capone.transactions.model.Transaction;
-
 @Service
 public class TransactionsUtility {
 
@@ -26,16 +24,4 @@ public class TransactionsUtility {
 		return datetime+num;
 	}
 	
-	public Transaction encryptPCIData(Transaction transaction){
-		
-		try {
-			transaction.setCardReferenceId(encryptionDecryptionUtility.encrypt(transaction.getCardReferenceId()));
-			transaction.setTransactionReferenceId(encryptionDecryptionUtility.encrypt(transaction.getTransactionReferenceId()));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return transaction;
-	}
 }

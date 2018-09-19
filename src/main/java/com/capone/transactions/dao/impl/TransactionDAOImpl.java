@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.capone.transactions.config.AccountTransactionsMapping;
 import com.capone.transactions.config.TransactionsStore;
 import com.capone.transactions.dao.TransactionDAO;
+import com.capone.transactions.model.DetailedTransaction;
 import com.capone.transactions.model.Transaction;
 import com.capone.transactions.model.TransactionSearchRequest;
 import com.capone.transactions.utils.TransactionsUtility;
@@ -22,30 +23,29 @@ public class TransactionDAOImpl implements TransactionDAO {
 
 	@Autowired
 	AccountTransactionsMapping accountTransactionsMapping;
-	
+
 	@Autowired
 	TransactionsUtility transactionsUtility;
 
 	@Override
-	public Transaction getTransaction(String transactionId) {
-		Map<String, Transaction> transactionsMap = transactionsStore
+	public DetailedTransaction getTransaction(String transactionId) {
+		Map<String, DetailedTransaction> transactionsMap = transactionsStore
 				.getTransactions();
-		Transaction transaction = null;
+		DetailedTransaction transaction = null;
 
-		for (Map.Entry<String, Transaction> entry : transactionsMap.entrySet()) {
+		for (Map.Entry<String, DetailedTransaction> entry : transactionsMap.entrySet()) {
 
 			if (transactionId.equals(entry.getKey())) {
 				transaction = entry.getValue();
 			}
 		}
-		
-		return transactionsUtility.encryptPCIData(transaction);
+		return transaction;
 	}
 
 	@Override
-	public List<Transaction> getTransactionsList(
+	public List<DetailedTransaction> getTransactionsList(
 			TransactionSearchRequest transactionRequest) {
-		List<Transaction> transactionList = new ArrayList<Transaction>();
+		List<DetailedTransaction> transactionList = new ArrayList();
 
 		Map<String, List<String>> accountTransactions = accountTransactionsMapping
 				.getTransactionsMap();
@@ -53,30 +53,33 @@ public class TransactionDAOImpl implements TransactionDAO {
 		List<String> listOfTransactionsOnAccount = accountTransactions
 				.get(transactionRequest.getAccountNumber());
 
-		Map<String, Transaction> transactionsMap = transactionsStore
+		Map<String, DetailedTransaction> transactionsMap = transactionsStore
 				.getTransactions();
 
-		//Iterating from the last to get the latest transactions first.
-		
-		for (int i = listOfTransactionsOnAccount.size()-1; i >= 0; i--) {
-			
-			Transaction transaction = transactionsMap.get(listOfTransactionsOnAccount
-					.get(i));
-			
-			if(transactionRequest.getAmount() != null &&
-					Double.parseDouble(transaction.getTransactionAmount())>=Double.parseDouble(transactionRequest.getAmount())){
-							
-							transactionList.add(transactionsUtility.encryptPCIData(transaction));
+		// Iterating from the last to get the latest transactions first.
+		if (listOfTransactionsOnAccount != null) {
+			for (int i = listOfTransactionsOnAccount.size() - 1; i >= 0; i--) {
+
+				DetailedTransaction detailedTransaction = transactionsMap
+						.get(listOfTransactionsOnAccount.get(i));
+
+				if (transactionRequest.getAmount() != null
+						&& Double.parseDouble(detailedTransaction.getTransactionAmount()) >= 
+						Double.parseDouble(transactionRequest.getAmount())) {
+
+					transactionList.add(detailedTransaction);
+				} else {
+					transactionList.add(detailedTransaction);
+				}
 			}
 		}
-
 		return transactionList;
 	}
 
 	@Override
 	public void addToTransactionsList(String accountNumber,
-			Transaction newTransaction, String transactionId) {
-		Map<String, Transaction> transactionsMap = transactionsStore
+			DetailedTransaction newTransaction, String transactionId) {
+		Map<String, DetailedTransaction> transactionsMap = transactionsStore
 				.getTransactions();
 
 		transactionsMap.put(transactionId, newTransaction);

@@ -7,18 +7,18 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
-import com.capone.transactions.model.Transaction;
+import com.capone.transactions.model.DetailedTransaction;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class TransactionsStore {
 
 	static {
-		InputStream inJson = Transaction.class.getResourceAsStream("/Transactions.json");
+		InputStream inJson = DetailedTransaction.class.getResourceAsStream("/Transactions.json");
 		ObjectMapper mapper=new ObjectMapper();
-		Transaction transation=null;
+		DetailedTransaction transation=null;
 		  try {
-			  transation = mapper.readValue(inJson, Transaction.class);
+			  transation = mapper.readValue(inJson, DetailedTransaction.class);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -28,9 +28,9 @@ public class TransactionsStore {
 		  
 	}
 	//Map that will store plain text TrasactionId as key and corresponding Transaction as value.
-	private Map<String, Transaction> transactionsMap = new HashMap<String, Transaction>();
+	private Map<String, DetailedTransaction> transactionsMap = new HashMap<String, DetailedTransaction>();
 	
-	public Map<String, Transaction> getTransactions(){
+	public Map<String, DetailedTransaction> getTransactions(){
 		return transactionsMap;
 	}
 
