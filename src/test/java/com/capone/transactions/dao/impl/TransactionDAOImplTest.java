@@ -16,7 +16,6 @@ import com.capone.transactions.config.TransactionsStore;
 import com.capone.transactions.model.DetailedTransaction;
 import com.capone.transactions.model.MerchantAddress;
 import com.capone.transactions.model.MerchantDetails;
-import com.capone.transactions.model.Transaction;
 import com.capone.transactions.model.TransactionSearchRequest;
 import com.capone.transactions.utils.EncryptionDecryptionUtility;
 import com.capone.transactions.utils.TransactionsUtility;
@@ -138,7 +137,7 @@ public class TransactionDAOImplTest {
 		
 		DetailedTransaction transaction2 = new DetailedTransaction();
 		transaction2.setCardExpirationDate("0822");
-		transaction2.setCardReferenceId("5424239400239827");
+		transaction2.setCardReferenceId("54245394529567492");
 		transaction2.setCurrencyCode("124");
 		transaction2.setDebitCreditCode("DB");
 		transaction2.setPostedDate("20180805");
@@ -161,7 +160,9 @@ public class TransactionDAOImplTest {
 	public void retrieveCorrectTransactionByIdTest() {
 		DetailedTransaction transaction = transactionDAO.getTransaction("123");
 		Assert.assertTrue("Transaction is null",transaction!=null);
-		
+		Assert.assertTrue("Transaction ID doesn't match", transaction.getTransactionReferenceId().equals("123"));
+		Assert.assertTrue("Merchant Name doesn't match", transaction.getMerchantDetails().getMerchantName().equals("Abc Restaraunt"));
+		Assert.assertTrue("Card reference doesn't match",transaction.getCardReferenceId().equals("12345678912345"));
 	}
 	
 	@Test
@@ -170,10 +171,27 @@ public class TransactionDAOImplTest {
 		transactionSearchRequest.setAmount("34.11");
 		transactionSearchRequest.setAccountNumber("12345678912345");
 		
-		//when(transactionUtility.encryptPCIData(any(Transaction.class)).thenReturn()
+		//when(transactionUtility.encryptPCIData(any(Transaction.class)).thenReturn()  
 		
-		List<Transaction> transactions = transactionDAO.getTransactionsList(transactionSearchRequest);
+		List<DetailedTransaction> transactions = transactionDAO.getTransactionsList(transactionSearchRequest);
 		Assert.assertTrue("Transaction List should contain only one transaction",transactions.size()==1);
+		Assert.assertTrue("Incorrect transaction retrieved", transactions.get(0).getTransactionReferenceId().equals("123"));
+		Assert.assertTrue("Incorrect transaction retrieved", transactions.get(0).getCardReferenceId().equals("12345678912345"));
+	}
+	
+	@Test
+	public void retrieveAllTransactionsOfAnAccount(){
+		
+		TransactionSearchRequest transactionSearchRequest = new TransactionSearchRequest();
+		transactionSearchRequest.setAccountNumber("54245394529567492");
+		
+		List<DetailedTransaction> transactions = transactionDAO.getTransactionsList(transactionSearchRequest);
+		Assert.assertTrue("Transaction List should contain two transactions",transactions.size()==2);
+		Assert.assertTrue("Incorrect transaction retrieved", transactions.get(0).getTransactionReferenceId().equals("732"));
+		Assert.assertTrue("Incorrect transaction retrieved", transactions.get(0).getCardReferenceId().equals("54245394529567492"));
+		
+		Assert.assertTrue("Incorrect transaction retrieved", transactions.get(1).getTransactionReferenceId().equals("530"));
+		Assert.assertTrue("Incorrect transaction retrieved", transactions.get(1).getCardReferenceId().equals("54245394529567492"));
 	}
 
 	

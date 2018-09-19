@@ -135,7 +135,6 @@ public void init(){
 		transaction2.setTransactionDescription("Refund");
 		transaction2.setTransactionReferenceId("732");
 		
-		
 		List<String> transactionsList = new ArrayList();
 		transactionsList.add("530");
 		transactionsList.add("732");
