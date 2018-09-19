@@ -1,53 +1,44 @@
-package com.capone.transactions.dao.impl;
+package com.capone.transactions.service;
+
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.capone.transactions.config.AccountTransactionsMapping;
-import com.capone.transactions.config.TransactionsStore;
+import com.capone.transactions.dao.impl.TransactionDAOImpl;
 import com.capone.transactions.model.DetailedTransaction;
 import com.capone.transactions.model.MerchantAddress;
 import com.capone.transactions.model.MerchantDetails;
-import com.capone.transactions.model.Transaction;
-import com.capone.transactions.model.TransactionSearchRequest;
 import com.capone.transactions.utils.EncryptionDecryptionUtility;
-import com.capone.transactions.utils.TransactionsUtility;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TransactionDAOImplTest {
+public class TransactionServiceTest {
 
-	@Spy
-	TransactionsStore transactionsStore;
-	
 	@InjectMocks
+	TransactionService transactionService;
+	
+	@Mock
 	TransactionDAOImpl transactionDAO;
 
 	@Spy
-	AccountTransactionsMapping accountTransactionsMapping;
-
-	@Spy
-	TransactionsUtility transactionUtility;
-	
-	@Spy
 	EncryptionDecryptionUtility encryptionDecryptionUtility;
 	
-	@Before
-	public void init(){
+public void init(){
 		
 		populateCard1Transactions();
 		populateCard2Transactions();
 		
 	}
 
-	private void populateCard1Transactions() {
+	private DetailedTransaction populateCard1Transactions() {
 		DetailedTransaction transaction1 = new DetailedTransaction();
 		
 		transaction1.setCardExpirationDate("0321");
@@ -79,7 +70,6 @@ public class TransactionDAOImplTest {
 		
 		merchant.setMerchantAddress(address);
 		transaction1.setMerchantDetails(merchant);
-		transactionsStore.getTransactions().put("123", transaction1);
 		
 		DetailedTransaction transaction2 = new DetailedTransaction();
 		transaction2.setCardExpirationDate("0415");
@@ -92,13 +82,12 @@ public class TransactionDAOImplTest {
 		transaction2.setTransactionDescription("Refund");
 		transaction2.setTransactionReferenceId("234");
 		
-		transactionsStore.getTransactions().put("234", transaction2);
 		
 		List<String> transactionsList = new ArrayList();
 		transactionsList.add("123");
 		transactionsList.add("234");
 
-		accountTransactionsMapping.getTransactionsMap().put("12345678912345", transactionsList);
+		return transaction1;
 	}
 
 	private void populateCard2Transactions() {
@@ -134,7 +123,6 @@ public class TransactionDAOImplTest {
 		
 		merchant.setMerchantAddress(address);
 		transaction1.setMerchantDetails(merchant);
-		transactionsStore.getTransactions().put("530", transaction1);
 		
 		DetailedTransaction transaction2 = new DetailedTransaction();
 		transaction2.setCardExpirationDate("0822");
@@ -147,34 +135,22 @@ public class TransactionDAOImplTest {
 		transaction2.setTransactionDescription("Refund");
 		transaction2.setTransactionReferenceId("732");
 		
-		transactionsStore.getTransactions().put("732", transaction2);
 		
 		List<String> transactionsList = new ArrayList();
 		transactionsList.add("530");
 		transactionsList.add("732");
 
-		accountTransactionsMapping.getTransactionsMap().put("54245394529567492", transactionsList);
 		
 	}
 	
 	@Test
-	public void retrieveCorrectTransactionByIdTest() {
-		DetailedTransaction transaction = transactionDAO.getTransaction("123");
-		Assert.assertTrue("Transaction is null",transaction!=null);
+	public void test() {
 		
-	}
-	
-	@Test
-	public void retrieveCorrectTransactionByAmountTest() {
-		TransactionSearchRequest transactionSearchRequest = new TransactionSearchRequest();
-		transactionSearchRequest.setAmount("34.11");
-		transactionSearchRequest.setAccountNumber("12345678912345");
+		Mockito.doReturn(populateCard1Transactions()).when(transactionDAO).getTransaction("123");
 		
-		//when(transactionUtility.encryptPCIData(any(Transaction.class)).thenReturn()
+		transactionService.getTransactionById("86/PSKkokJK1LFe7wqD41g==");
 		
-		List<Transaction> transactions = transactionDAO.getTransactionsList(transactionSearchRequest);
-		Assert.assertTrue("Transaction List should contain only one transaction",transactions.size()==1);
+		fail("Not yet implemented");
 	}
 
-	
 }
