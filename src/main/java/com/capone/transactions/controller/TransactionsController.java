@@ -1,5 +1,6 @@
 package com.capone.transactions.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -35,12 +36,17 @@ public class TransactionsController {
 	public List<Transaction> getTransactions(@PathVariable("accountReferenceId") String accountReferenceId, @RequestParam(value = "amount", required=false) String amount){
 		
 			validationService.validateAccountNumber(accountReferenceId);
+			validationService.validateAmount(amount);
 			TransactionSearchRequest transactionRequest = new TransactionSearchRequest();
 			transactionRequest.setAccountReferenceId(accountReferenceId);
+			List<Transaction> transactionList = transactionService.getTransactionBySearchCriteria(transactionRequest);
 			
+			if(transactionList==null || transactionList.size()==0){
+				throw new NoContentException();
+			}else{
+				return transactionList;
+			}
 			
-			return transactionService.getTransactionBySearchCriteria(transactionRequest);
-		
 	}
 	
 	@RequestMapping("/accounts/{accountReferenceId}/transactions/{transactionReferenceId}")
@@ -63,9 +69,7 @@ public class TransactionsController {
 	public void postTransaction(@Valid @RequestBody DetailedTransaction transaction){
 		
 		validationService.validatePostedTransaction(transaction);
-		
 		transactionService.addTransaction(transaction.getCardReferenceId(),transaction);
-		
 	}
 	
 	@RequestMapping("/accounts/{accountNumber}/encrypt")

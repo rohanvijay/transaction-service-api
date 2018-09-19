@@ -1,8 +1,5 @@
 package com.capone.transactions.service;
 
-import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +67,18 @@ public class ValidationService {
 		if(!validPostalCode){
 			throw new BadRequestException();
 		}
+		
+	}
+
+	public void validateAmount(String amount) {
+		if(amount != null){
+			try{
+			Double.parseDouble(amount);
+			}catch (Exception ex){
+				throw new BadRequestException();
+			}
+		}
+		
 		
 	}
 	
