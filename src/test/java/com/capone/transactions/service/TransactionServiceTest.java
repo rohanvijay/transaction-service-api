@@ -5,6 +5,7 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -143,13 +144,15 @@ public void init(){
 	}
 	
 	@Test
-	public void test() {
+	public void pciDataEncrpytedBeforeSendingBackToClientTest() {
 		
 		Mockito.doReturn(populateCard1Transactions()).when(transactionDAO).getTransaction("123");
 		
-		transactionService.getTransactionById("86/PSKkokJK1LFe7wqD41g==");
-		
-		fail("Not yet implemented");
+		DetailedTransaction transaction = transactionService.getTransactionById("86/PSKkokJK1LFe7wqD41g==");
+		Assert.assertTrue("Incorrect transaction retrieved", transaction.getCardReferenceId().equals("Oo5qvGnKvAxoq8rwPhSmhA=="));
+		Assert.assertTrue("Incorrect transaction retrieved", transaction.getTransactionReferenceId().equals("86/PSKkokJK1LFe7wqD41g=="));
+		Assert.assertTrue("Incorrect transaction retrieved", transaction.getMerchantDetails().getMerchantName().equalsIgnoreCase("ABC Restaraunt"));
+		Assert.assertTrue("Incorrect transaction retrieved", transaction.getMerchantDetails().getMerchantAddress().getCity().equalsIgnoreCase("Chicago"));
 	}
 
 }
