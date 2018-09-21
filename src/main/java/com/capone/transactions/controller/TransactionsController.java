@@ -39,6 +39,7 @@ public class TransactionsController {
 			validationService.validateAmount(amount);
 			TransactionSearchRequest transactionRequest = new TransactionSearchRequest();
 			transactionRequest.setAccountReferenceId(accountReferenceId);
+			transactionRequest.setAmount(amount);
 			List<Transaction> transactionList = transactionService.getTransactionBySearchCriteria(transactionRequest);
 			
 			if(transactionList==null || transactionList.size()==0){
