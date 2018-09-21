@@ -20,6 +20,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.capone.transactions.application.Transactions;
 import com.capone.transactions.model.DetailedTransaction;
+import com.capone.transactions.model.MerchantAddress;
+import com.capone.transactions.model.MerchantDetails;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Transactions.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -76,5 +78,63 @@ public class TransactionDetailsIntegrationTest {
 		}catch(Exception ex){
 			fail("Exception : "+ex.getMessage());
 		}
+	}
+	
+	@Test
+	public void testPostInvalidAccountTransactions() {
+
+		DetailedTransaction transaction = getTransaction();
+		
+		HttpEntity<DetailedTransaction> entity = new HttpEntity<DetailedTransaction>(transaction, headers);
+
+		try{
+		ResponseEntity<String> response = restTemplate.exchange(
+				createURLWithPort("/postTransaction"),
+				HttpMethod.POST, entity, String.class);
+		
+		HttpStatus responseCode = response.getStatusCode();
+		assertTrue("Incorrect status code. Expected : 200, Actual : "+responseCode,responseCode==HttpStatus.OK);
+		
+		}catch(Exception ex){
+			fail("Exception : "+ex.getMessage());
+		}
+	}
+
+	private DetailedTransaction getTransaction() {
+		
+		DetailedTransaction transaction = new DetailedTransaction();
+		
+		transaction.setCardExpirationDate("0321");
+		transaction.setCardReferenceId("12345678912345");
+		transaction.setCurrencyCode("840");
+		transaction.setDebitCreditCode("CR");
+		transaction.setPointOfSaleCardUsageCode("Chip");
+		transaction.setPointOfSaleCardPresenceDescription("Card holder present at time of transaction");
+		transaction.setPointOfSaleCardPresenceCode("12");
+		transaction.setPostedDate("20180210");
+		transaction.setTransactionAmount("34.12");
+		transaction.setTransactionDate("20180206");
+		transaction.setTransactionDescription("Purchase");
+		transaction.setTransactionReferenceId("123");
+		
+		MerchantDetails merchant = new MerchantDetails();
+		merchant.setCategoryCode("15");
+		merchant.setCategory("Dining");
+		merchant.setMerchantName("Abc Restaraunt");
+		merchant.setStoreNumber("304983459");
+		
+		MerchantAddress address = new MerchantAddress();
+		address.setAddressLine1("Address Line 1");
+		address.setAddressLine2("Address Line 2");
+		address.setCity("Chicago");
+		address.setCountry("US");
+		address.setPostalCode("43032");
+		address.setState("IL");
+		
+		merchant.setMerchantAddress(address);
+		transaction.setMerchantDetails(merchant);
+		
+		return transaction;
+		
 	}
 }
