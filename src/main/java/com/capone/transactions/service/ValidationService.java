@@ -61,7 +61,7 @@ public class ValidationService {
 		}
 		
 		if(transaction.getMerchantDetails().getMerchantAddress().getCountry().equalsIgnoreCase("CA")){
-			validPostalCode = Pattern.matches("/^[A-Za-z]\\d[A-Za-z][ -]?\\d[A-Za-z]\\d$/", transaction.getMerchantDetails().getMerchantAddress().getPostalCode());
+			validPostalCode = Pattern.matches("^(?!.*[DFIOQU])[A-VXY][0-9][A-Z] ?[0-9][A-Z][0-9]$", transaction.getMerchantDetails().getMerchantAddress().getPostalCode());
 		}
 		
 		if(!validPostalCode){
