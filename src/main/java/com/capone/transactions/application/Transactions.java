@@ -1,5 +1,7 @@
 package com.capone.transactions.application;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
@@ -12,8 +14,11 @@ import org.springframework.web.util.UrlPathHelper;
 public class Transactions extends WebMvcConfigurerAdapter {
 
 	public static void main(String[] args) {
+		
+		Logger logger = LoggerFactory.getLogger(Transactions.class);
 		  System.setProperty("org.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH", "true");
         SpringApplication.run(Transactions.class, args);
+        logger.debug("--Application Started--");
     }
 	
 	 @Override

@@ -41,11 +41,11 @@ public class DetailedTransaction {
 
 	@NotNull
 	@Pattern(regexp = "\\d{2}")
-	private String pointOfSalePresenceCode;
+	private String pointOfSaleCardPresenceCode;
 
 	@NotNull
 	@Length(max = 50, min = 1, message = "The message description should be within 1 to 50 characters")
-	private String pointOfSalePresenceDescription;
+	private String pointOfSaleCardPresenceDescription;
 
 	@NotNull
 	private String pointOfSaleCardUsageCode;
@@ -120,23 +120,6 @@ public class DetailedTransaction {
 		this.currencyCode = currencyCode;
 	}
 
-	public String getPointOfSalePresenceCode() {
-		return pointOfSalePresenceCode;
-	}
-
-	public void setPointOfSalePresenceCode(String pointOfSalePresenceCode) {
-		this.pointOfSalePresenceCode = pointOfSalePresenceCode;
-	}
-
-	public String getPointOfSalePresenceDescription() {
-		return pointOfSalePresenceDescription;
-	}
-
-	public void setPointOfSalePresenceDescription(
-			String pointOfSalePresenceDescription) {
-		this.pointOfSalePresenceDescription = pointOfSalePresenceDescription;
-	}
-
 	public String getPointOfSaleCardUsageCode() {
 		return pointOfSaleCardUsageCode;
 	}
@@ -159,6 +142,23 @@ public class DetailedTransaction {
 
 	public void setMerchantDetails(MerchantDetails merchantDetails) {
 		this.merchantDetails = merchantDetails;
+	}
+
+	public String getPointOfSaleCardPresenceCode() {
+		return pointOfSaleCardPresenceCode;
+	}
+
+	public void setPointOfSaleCardPresenceCode(String pointOfSaleCardPresenceCode) {
+		this.pointOfSaleCardPresenceCode = pointOfSaleCardPresenceCode;
+	}
+
+	public String getPointOfSaleCardPresenceDescription() {
+		return pointOfSaleCardPresenceDescription;
+	}
+
+	public void setPointOfSaleCardPresenceDescription(
+			String pointOfSaleCardPresenceDescription) {
+		this.pointOfSaleCardPresenceDescription = pointOfSaleCardPresenceDescription;
 	}
 	
 }

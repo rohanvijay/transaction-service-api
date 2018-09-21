@@ -2,9 +2,12 @@ package com.capone.transactions.service;
 
 import java.util.regex.Pattern;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.capone.transactions.controller.TransactionsController;
 import com.capone.transactions.exceptions.BadRequestException;
 import com.capone.transactions.model.DetailedTransaction;
 import com.capone.transactions.utils.EncryptionDecryptionUtility;
@@ -15,6 +18,8 @@ public class ValidationService {
 	@Autowired
 	EncryptionDecryptionUtility encryptionDecryptionUtility;
 	
+	Logger logger = LoggerFactory.getLogger(TransactionsController.class);
+	
 	public void validateTransactionId(String transactionReferenceId){
 		
 		String transactionId=null;
@@ -23,9 +28,11 @@ public class ValidationService {
 			transactionId = encryptionDecryptionUtility.decrypt(transactionReferenceId);
 		}
 		catch(Exception ex){
+			logger.error("Invalid Transaction Reference Id | "+ transactionReferenceId);
 			throw new BadRequestException();
 		}
 		if (transactionId == null || !(transactionId.matches("\\d{18}"))){
+			logger.error("Invalid Transaction Reference Id | "+ transactionReferenceId);
 			throw new BadRequestException();
 		}
 	}
@@ -38,6 +45,7 @@ public class ValidationService {
 			accountNumber = encryptionDecryptionUtility.decrypt(accountReferenceId);
 		}
 		catch(Exception ex){
+			logger.error("Invalid Account Reference Id | "+ accountReferenceId);
 			throw new BadRequestException();
 		}
 		if (accountNumber == null || !(accountNumber.matches("\\d{16}"))){
@@ -51,7 +59,7 @@ public class ValidationService {
 		boolean validPostalCode = false;
 		
 		if(transaction.getDebitCreditCode().equalsIgnoreCase("CR")){
-			if(transaction.getPointOfSalePresenceCode() == null || transaction.getPointOfSalePresenceDescription() == null){
+			if(transaction.getPointOfSaleCardPresenceCode() == null || transaction.getPointOfSaleCardPresenceDescription() == null){
 				throw new BadRequestException();
 			}
 		}
@@ -78,8 +86,6 @@ public class ValidationService {
 				throw new BadRequestException();
 			}
 		}
-		
-		
 	}
 	
 }

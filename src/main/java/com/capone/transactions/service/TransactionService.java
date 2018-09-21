@@ -114,8 +114,8 @@ public class TransactionService {
 		responseTransaction.setCurrencyCode(detailedTransactionFromBackend.getCurrencyCode());
 		responseTransaction.setDebitCreditCode(detailedTransactionFromBackend.getDebitCreditCode());
 		responseTransaction.setPointOfSaleCardUsageCode(detailedTransactionFromBackend.getPointOfSaleCardUsageCode());
-		responseTransaction.setPointOfSalePresenceDescription(detailedTransactionFromBackend.getPointOfSalePresenceDescription());
-		responseTransaction.setPointOfSalePresenceCode(detailedTransactionFromBackend.getPointOfSalePresenceCode());
+		responseTransaction.setPointOfSaleCardPresenceDescription(detailedTransactionFromBackend.getPointOfSaleCardPresenceDescription());
+		responseTransaction.setPointOfSaleCardPresenceCode(detailedTransactionFromBackend.getPointOfSaleCardPresenceCode());
 		responseTransaction.setPostedDate(detailedTransactionFromBackend.getPostedDate());
 		responseTransaction.setTransactionAmount(detailedTransactionFromBackend.getTransactionAmount());
 		responseTransaction.setTransactionDate(detailedTransactionFromBackend.getTransactionDate());
