@@ -71,7 +71,7 @@ public class TransactionService {
 			accountNumber = encryptionDecryptionUtility
 					.decrypt(accountReferenceId);
 		} catch (Exception ex) {
-
+			throw new BadRequestException();
 		}
 
 		String transactionId = transactionsUtility.generateKey();
