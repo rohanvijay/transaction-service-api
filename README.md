@@ -10,5 +10,4 @@ Please go through the below files for more clarity.
     
 Code flow
 
-![alt text] (https://github.com/rohanvijay/transaction-service-api/blob/master/Transaction%20Details%20code%20flow.png)
-
+![alt text](https://github.com/rohanvijay/transaction-service-api/blob/master/Transaction%20Details%20code%20flow.png)
