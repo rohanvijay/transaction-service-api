@@ -1,4 +1,4 @@
-This API will serve three purposes.
+Transaction-Service-API will serve three purposes.
 
     1.	Post a Transaction
     2.	Return list of transactions on an account
