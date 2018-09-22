@@ -86,18 +86,22 @@ public class TransactionService {
 	private Transaction createResponseCompactTransaction(
 			DetailedTransaction detailedTransactionFromBackend) {
 		
-		Transaction transaction = new Transaction();
+		Transaction transaction = null;
 		
-		transaction.setDebitCreditCode(detailedTransactionFromBackend.getDebitCreditCode());
-		transaction.setMerchantName(detailedTransactionFromBackend.getMerchantDetails().getMerchantName());
-		transaction.setTransactionAmount(detailedTransactionFromBackend.getTransactionAmount());
-		transaction.setTransactionDate(detailedTransactionFromBackend.getTransactionDate());
+		if(detailedTransactionFromBackend!=null){
 		
-		try{
-		transaction.setCardReferenceId(encryptionDecryptionUtility.encrypt(detailedTransactionFromBackend.getCardReferenceId()));
-		transaction.setTransactionReferenceId(encryptionDecryptionUtility.encrypt(detailedTransactionFromBackend.getTransactionReferenceId()));
-		}catch (Exception e){
-			e.printStackTrace();
+			transaction = new Transaction();
+			transaction.setDebitCreditCode(detailedTransactionFromBackend.getDebitCreditCode());
+			transaction.setMerchantName(detailedTransactionFromBackend.getMerchantDetails().getMerchantName());
+			transaction.setTransactionAmount(detailedTransactionFromBackend.getTransactionAmount());
+			transaction.setTransactionDate(detailedTransactionFromBackend.getTransactionDate());
+			
+			try{
+			transaction.setCardReferenceId(encryptionDecryptionUtility.encrypt(detailedTransactionFromBackend.getCardReferenceId()));
+			transaction.setTransactionReferenceId(encryptionDecryptionUtility.encrypt(detailedTransactionFromBackend.getTransactionReferenceId()));
+			}catch (Exception e){
+				e.printStackTrace();
+			}
 		}
 		return transaction;
 	}

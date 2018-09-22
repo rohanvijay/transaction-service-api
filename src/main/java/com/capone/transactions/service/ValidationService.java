@@ -49,6 +49,7 @@ public class ValidationService {
 			throw new BadRequestException();
 		}
 		if (accountNumber == null || !(accountNumber.matches("\\d{16}"))){
+			logger.error("Invalid Account Reference Id | "+ accountReferenceId);
 			throw new BadRequestException();
 		}
 	}
@@ -60,6 +61,7 @@ public class ValidationService {
 		
 		if(transaction.getDebitCreditCode().equalsIgnoreCase("CR")){
 			if(transaction.getPointOfSaleCardPresenceCode() == null || transaction.getPointOfSaleCardPresenceDescription() == null){
+				logger.error("Invalid Point of Sale Card Presence Code");
 				throw new BadRequestException();
 			}
 		}
@@ -73,6 +75,7 @@ public class ValidationService {
 		}
 		
 		if(!validPostalCode){
+			logger.error("Invalid Postal Code");
 			throw new BadRequestException();
 		}
 		
@@ -83,6 +86,7 @@ public class ValidationService {
 			try{
 			Double.parseDouble(amount);
 			}catch (Exception ex){
+				logger.error("Invalid Amount");
 				throw new BadRequestException();
 			}
 		}

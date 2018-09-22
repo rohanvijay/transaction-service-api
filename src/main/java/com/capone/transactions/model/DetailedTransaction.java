@@ -47,7 +47,6 @@ public class DetailedTransaction {
 	@Length(max = 50, min = 1, message = "The message description should be within 1 to 50 characters")
 	private String pointOfSaleCardPresenceDescription;
 
-	@NotNull
 	private String pointOfSaleCardUsageCode;
 
 	@NotNull

@@ -33,22 +33,11 @@ public class DataSource {
 	public void init() {
 		List<String> accountsList = accountsStore.getAccountsList();
 		
-		accountsList.add("5424480021237823");
-		accountsList.add("1234567891234502");
-		accountsList.add("5424480021237822");
-		accountsList.add("1234567891234504");
-		accountsList.add("1234567891234505");
-		accountsList.add("1234567891234506");
-		accountsList.add("1234567891234507");
-		accountsList.add("1234567891234508");
-		accountsList.add("1234567891234509");
-		accountsList.add("1234567891234510");
-		accountsList.add("1234567891234511");
-		//TypeReference<List<DetailedTransaction>> mapType = new TypeReference<List<DetailedTransaction>>() {};
+		accountsList.add("5424480021237821");
+		accountsList.add("1234567891234501");
 		  
 		InputStream inJson = DetailedTransaction[].class.getResourceAsStream("/Transactions.json");
-		//JsonReader reader = new JsonReader(new InputStreamReader(is, "UTF-8"));
-		//reader.setLenient(true);
+		
 		BufferedReader br = new BufferedReader(new InputStreamReader(inJson));
 		ObjectMapper mapper=new ObjectMapper();
 		  try {
@@ -66,10 +55,13 @@ public class DataSource {
 		  List<String> transactionIds = new ArrayList<>();
 		  transactionIds.add("501");
 		  transactionIds.add("502");
-		accountsTransactionsMapping.getTransactionsMap().put("5424480021237823",transactionIds);
+		  transactionIds.add("503");
+		accountsTransactionsMapping.getTransactionsMap().put("5424480021237821",transactionIds);
 		
 		transactionIds = new ArrayList<>();
-		transactionIds.add("503");
-		accountsTransactionsMapping.getTransactionsMap().put("5424480021237822",transactionIds);
+		transactionIds.add("504");
+		transactionIds.add("505");
+		transactionIds.add("506");
+		accountsTransactionsMapping.getTransactionsMap().put("1234567891234501",transactionIds);
 	}
 }
