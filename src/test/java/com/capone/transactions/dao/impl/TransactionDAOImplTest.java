@@ -54,8 +54,8 @@ public class TransactionDAOImplTest {
 		transaction1.setCurrencyCode("840");
 		transaction1.setDebitCreditCode("CR");
 		transaction1.setPointOfSaleCardUsageCode("Chip");
-		transaction1.setPointOfSalePresenceDescription("Card holder present at time of transaction");
-		transaction1.setPointOfSalePresenceCode("12");
+		transaction1.setPointOfSaleCardPresenceDescription("Card holder present at time of transaction");
+		transaction1.setPointOfSaleCardPresenceCode("12");
 		transaction1.setPostedDate("20180210");
 		transaction1.setTransactionAmount("34.12");
 		transaction1.setTransactionDate("20180206");
@@ -109,8 +109,8 @@ public class TransactionDAOImplTest {
 		transaction1.setCurrencyCode("840");
 		transaction1.setDebitCreditCode("CR");
 		transaction1.setPointOfSaleCardUsageCode("Chip");
-		transaction1.setPointOfSalePresenceDescription("Card holder present at time of transaction");
-		transaction1.setPointOfSalePresenceCode("12");
+		transaction1.setPointOfSaleCardPresenceDescription("Card holder present at time of transaction");
+		transaction1.setPointOfSaleCardPresenceCode("12");
 		transaction1.setPostedDate("20180210");
 		transaction1.setTransactionAmount("55.23");
 		transaction1.setTransactionDate("20180206");
@@ -166,21 +166,20 @@ public class TransactionDAOImplTest {
 	}
 	
 	@Test
-	public void retrieveCorrectTransactionByAmountTest() {
+	public void retrieveTransactionsGreaterThanOrEqualToAmountRequestTest() {
 		TransactionSearchRequest transactionSearchRequest = new TransactionSearchRequest();
 		transactionSearchRequest.setAmount("34.11");
 		transactionSearchRequest.setAccountNumber("12345678912345");
-		
-		//when(transactionUtility.encryptPCIData(any(Transaction.class)).thenReturn()  
 		
 		List<DetailedTransaction> transactions = transactionDAO.getTransactionsList(transactionSearchRequest);
 		Assert.assertTrue("Transaction List should contain only one transaction",transactions.size()==1);
 		Assert.assertTrue("Incorrect transaction retrieved", transactions.get(0).getTransactionReferenceId().equals("123"));
 		Assert.assertTrue("Incorrect transaction retrieved", transactions.get(0).getCardReferenceId().equals("12345678912345"));
+		Assert.assertTrue("Incorrect transaction retrieved", transactions.get(0).getTransactionAmount().equals("34.12"));
 	}
 	
 	@Test
-	public void retrieveAllTransactionsOfAnAccount(){
+	public void retrieveAllTransactionWithLatestTransactionsOnTopTest(){
 		
 		TransactionSearchRequest transactionSearchRequest = new TransactionSearchRequest();
 		transactionSearchRequest.setAccountNumber("54245394529567492");

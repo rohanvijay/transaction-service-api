@@ -3,11 +3,15 @@ package com.capone.transactions.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.capone.transactions.dao.impl.TransactionDAOImpl;
+import com.capone.transactions.controller.TransactionsController;
+import com.capone.transactions.dao.TransactionDAO;
 import com.capone.transactions.exceptions.BadRequestException;
+import com.capone.transactions.exceptions.InternalServerException;
 import com.capone.transactions.model.DetailedTransaction;
 import com.capone.transactions.model.Transaction;
 import com.capone.transactions.model.TransactionSearchRequest;
@@ -18,7 +22,7 @@ import com.capone.transactions.utils.TransactionsUtility;
 public class TransactionService {
 
 	@Autowired
-	TransactionDAOImpl transactionDAO;
+	TransactionDAO transactionDAO;
 
 	@Autowired
 	EncryptionDecryptionUtility encryptionDecryptionUtility;
@@ -26,6 +30,8 @@ public class TransactionService {
 	@Autowired
 	TransactionsUtility transactionsUtility;
 
+	Logger logger = LoggerFactory.getLogger(TransactionService.class);
+	
 	public DetailedTransaction getTransactionById(String transactionReferenceId) {
 
 		String transactionId = null;
@@ -33,7 +39,9 @@ public class TransactionService {
 		try {
 			transactionId = encryptionDecryptionUtility.decrypt(transactionReferenceId);
 		} catch (Exception ex) {
-			throw new BadRequestException();
+			logger.error("Exception while decrypting Account Id: "+ transactionReferenceId);
+			logger.error("Exception: "+ ex.getMessage());
+			throw new BadRequestException("Invalid Transaction Id");
 		}
 
 		DetailedTransaction detailedTransactionFromBackend = transactionDAO.getTransaction(transactionId);
@@ -49,7 +57,9 @@ public class TransactionService {
 		try {
 			accountNumber = encryptionDecryptionUtility.decrypt(transactionRequest.getAccountReferenceId());
 		} catch (Exception ex) {
-			throw new BadRequestException();
+			logger.error("Exception while decrypting Account Id: "+ transactionRequest.getAccountReferenceId());
+			logger.error("Exception: "+ ex.getMessage());
+			throw new BadRequestException("Invalid Account Number");
 		}
 		transactionRequest.setAccountNumber(accountNumber);
 		
@@ -71,6 +81,8 @@ public class TransactionService {
 			accountNumber = encryptionDecryptionUtility
 					.decrypt(accountReferenceId);
 		} catch (Exception ex) {
+			logger.error("Exception while decrypting Account Id: "+ accountReferenceId);
+			logger.error("Exception: "+ ex.getMessage());
 			throw new BadRequestException();
 		}
 
@@ -100,7 +112,8 @@ public class TransactionService {
 			transaction.setCardReferenceId(encryptionDecryptionUtility.encrypt(detailedTransactionFromBackend.getCardReferenceId()));
 			transaction.setTransactionReferenceId(encryptionDecryptionUtility.encrypt(detailedTransactionFromBackend.getTransactionReferenceId()));
 			}catch (Exception e){
-				e.printStackTrace();
+				logger.error(e.getMessage());
+				throw new InternalServerException();
 			}
 		}
 		return transaction;
@@ -128,9 +141,10 @@ public class TransactionService {
 		try{
 			responseTransaction.setCardReferenceId(encryptionDecryptionUtility.encrypt(detailedTransactionFromBackend.getCardReferenceId()));
 			responseTransaction.setTransactionReferenceId(encryptionDecryptionUtility.encrypt(detailedTransactionFromBackend.getTransactionReferenceId()));
-		}catch (Exception e){
-			e.printStackTrace();
-		}
+			}catch (Exception e){
+				logger.error(e.getMessage());
+				throw new InternalServerException();
+			}
 		}
 		return responseTransaction;
 	}

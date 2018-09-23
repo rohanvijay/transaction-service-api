@@ -47,8 +47,8 @@ public void init(){
 		transaction1.setCurrencyCode("840");
 		transaction1.setDebitCreditCode("CR");
 		transaction1.setPointOfSaleCardUsageCode("Chip");
-		transaction1.setPointOfSalePresenceDescription("Card holder present at time of transaction");
-		transaction1.setPointOfSalePresenceCode("12");
+		transaction1.setPointOfSaleCardPresenceDescription("Card holder present at time of transaction");
+		transaction1.setPointOfSaleCardPresenceCode("12");
 		transaction1.setPostedDate("20180210");
 		transaction1.setTransactionAmount("34.12");
 		transaction1.setTransactionDate("20180206");
@@ -100,8 +100,8 @@ public void init(){
 		transaction1.setCurrencyCode("840");
 		transaction1.setDebitCreditCode("CR");
 		transaction1.setPointOfSaleCardUsageCode("Chip");
-		transaction1.setPointOfSalePresenceDescription("Card holder present at time of transaction");
-		transaction1.setPointOfSalePresenceCode("12");
+		transaction1.setPointOfSaleCardPresenceDescription("Card holder present at time of transaction");
+		transaction1.setPointOfSaleCardPresenceCode("12");
 		transaction1.setPostedDate("20180210");
 		transaction1.setTransactionAmount("55.23");
 		transaction1.setTransactionDate("20180206");
@@ -139,8 +139,6 @@ public void init(){
 		List<String> transactionsList = new ArrayList();
 		transactionsList.add("530");
 		transactionsList.add("732");
-
-		
 	}
 	
 	@Test

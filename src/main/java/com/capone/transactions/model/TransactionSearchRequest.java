@@ -1,6 +1,5 @@
 package com.capone.transactions.model;
 
-import java.math.BigDecimal;
 
 public class TransactionSearchRequest {
 

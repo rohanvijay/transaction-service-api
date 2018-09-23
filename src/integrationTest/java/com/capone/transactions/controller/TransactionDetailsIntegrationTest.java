@@ -81,7 +81,26 @@ public class TransactionDetailsIntegrationTest {
 	}
 	
 	@Test
-	public void testPostInvalidAccountTransactions() {
+	public void testGetAccountTransactionsPassingInvalidAmountInRequest() {
+
+		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+
+		try{
+		String encodedAcnt = "cgfzw9OoEfwWMaj3spNboFTDikltNCZL2ptcPzDhWpo=";
+		ResponseEntity<String> response = restTemplate.exchange(
+				createURLWithPort("/accounts/"+encodedAcnt+"/transactions?amount=A1"),
+				HttpMethod.GET, entity, String.class);
+		
+		HttpStatus responseCode = response.getStatusCode();
+		assertTrue("Incorrect status code. Expected : 404, Actual : "+responseCode,responseCode==HttpStatus.BAD_REQUEST);
+		
+		}catch(Exception ex){
+			fail("Exception : "+ex.getMessage());
+		}
+	}
+	
+	@Test
+	public void testPostValidAccountTransactions() {
 
 		DetailedTransaction transaction = getTransaction();
 		
@@ -99,13 +118,35 @@ public class TransactionDetailsIntegrationTest {
 			fail("Exception : "+ex.getMessage());
 		}
 	}
+	
+	@Test
+	public void testPostInvalidValidAccountTransactions() {
+
+		//Invalid Transaction as Country is CA and Postal Code is 43032.
+		DetailedTransaction transaction = getTransaction();
+		transaction.getMerchantDetails().getMerchantAddress().setCountry("CA");
+		
+		HttpEntity<DetailedTransaction> entity = new HttpEntity<DetailedTransaction>(transaction, headers);
+
+		try{
+		ResponseEntity<String> response = restTemplate.exchange(
+				createURLWithPort("/postTransaction"),
+				HttpMethod.POST, entity, String.class);
+		
+		HttpStatus responseCode = response.getStatusCode();
+		assertTrue("Incorrect status code. Expected : 400, Actual : "+responseCode,responseCode==HttpStatus.BAD_REQUEST);
+		
+		}catch(Exception ex){
+			fail("Exception : "+ex.getMessage());
+		}
+	}
 
 	private DetailedTransaction getTransaction() {
 		
 		DetailedTransaction transaction = new DetailedTransaction();
 		
 		transaction.setCardExpirationDate("0321");
-		transaction.setCardReferenceId("12345678912345");
+		transaction.setCardReferenceId("CF94ndQMq/bbjG2+zbgvhVTDikltNCZL2ptcPzDhWpo=");
 		transaction.setCurrencyCode("840");
 		transaction.setDebitCreditCode("CR");
 		transaction.setPointOfSaleCardUsageCode("Chip");

@@ -15,7 +15,7 @@ import com.capone.transactions.model.Transaction;
 import com.capone.transactions.model.TransactionSearchRequest;
 import com.capone.transactions.utils.TransactionsUtility;
 
-@Component("transactionDAO")
+@Component
 public class TransactionDAOImpl implements TransactionDAO {
 
 	@Autowired

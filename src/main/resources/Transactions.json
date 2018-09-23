@@ -36,8 +36,8 @@
     "debitCreditCode": "CR",
     "cardExpirationDate": "0521",
     "currencyCode": "840",
-    "pointOfSalePresenceCode": "12",
-    "pointOfSalePresenceDescription": "Card holder present at time of sale",
+    "pointOfSaleCardPresenceCode": "12",
+    "pointOfSaleCardPresenceDescription": "Card holder present at time of sale",
     "pointOfSaleCardUsageCode": "Chip",
     "cardReferenceId": "5424480021237821",
     "merchantDetails": {
@@ -94,8 +94,8 @@
     "debitCreditCode": "CR",
     "cardExpirationDate": "0220",
     "currencyCode": "840",
-    "pointOfSalePresenceCode": "12",
-    "pointOfSalePresenceDescription": "Card holder present at time of sale",
+    "pointOfSaleCardPresenceCode": "12",
+    "pointOfSaleCardPresenceDescription": "Card holder present at time of sale",
     "pointOfSaleCardUsageCode": "Chip",
     "cardReferenceId": "1234567891234501",
     "merchantDetails": {
@@ -123,8 +123,8 @@
     "debitCreditCode": "CR",
     "cardExpirationDate": "0220",
     "currencyCode": "840",
-    "pointOfSalePresenceCode": "78",
-    "pointOfSalePresenceDescription": "Card not present at time of sale - Recurring Transaction",
+    "pointOfSaleCardPresenceCode": "78",
+    "pointOfSaleCardPresenceDescription": "Card not present at time of sale - Recurring Transaction",
     "pointOfSaleCardUsageCode": "ABC",
     "cardReferenceId": "1234567891234501",
     "merchantDetails": {
@@ -152,8 +152,8 @@
     "debitCreditCode": "CR",
     "cardExpirationDate": "0220",
     "currencyCode": "840",
-    "pointOfSalePresenceCode": "12",
-    "pointOfSalePresenceDescription": "Card holder present at time of sale",
+    "pointOfSaleCardPresenceCode": "12",
+    "pointOfSaleCardPresenceDescription": "Card holder present at time of sale",
     "pointOfSaleCardUsageCode": "Chip",
     "cardReferenceId": "1234567891234501",
     "merchantDetails": {
