@@ -1,8 +1,0 @@
-/Users/Rohan/Documents/workspace/transaction-details-api/src/main/java/com/capone/transactions/dao/TransactionDAO.java
-/Users/Rohan/Documents/workspace/transaction-details-api/src/main/java/com/capone/transactions/model/MerchantAddress.java
-/Users/Rohan/Documents/workspace/transaction-details-api/src/main/java/com/capone/transactions/model/MerchantDetails.java
-/Users/Rohan/Documents/workspace/transaction-details-api/src/main/java/com/capone/transactions/config/TransactionsStore.java
-/Users/Rohan/Documents/workspace/transaction-details-api/src/main/java/com/capone/transactions/controller/TransactionsController.java
-/Users/Rohan/Documents/workspace/transaction-details-api/src/main/java/com/capone/transactions/application/TransactionsService.java
-/Users/Rohan/Documents/workspace/transaction-details-api/src/main/java/com/capone/transactions/model/Transaction.java
-/Users/Rohan/Documents/workspace/transaction-details-api/src/main/java/com/capone/transactions/config/DataSource.java
